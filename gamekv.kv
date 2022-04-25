@@ -5,17 +5,18 @@
 	canvas.before:
         Color:
             rgba:
-            	(0, 0, 0, 1) if self.background_color==app.blank_color and self.text!='' \
-            	else (.75, .75, .75, 1) if self.background_color==app.blank_color \
+            	(.5, .5, .5, .5) if self.background_color==app.blank_color and self.text!='' \
+            	else (.5, .5, .5, .5) if self.background_color==app.blank_color \
             	else self.background_color
         Line:
-            width: 3
+            width: 2
             rectangle: (self.x, self.y, self.width, self.height)
 
 <StringButton@Button>:
 	background_normal: ''
 	background_down: ''
 	background_color: app.keyboard_default_color
+	# keys colors
 	color: (0, 0, 0, 1) if self.background_color==app.keyboard_default_color else (1, 1, 1, 1)
 	font_size: self.width / 1.5
 
@@ -26,25 +27,25 @@
 	font_size: self.width / 3
 
 <GameScreen>:
-	BoxLayout:
+	MDBoxLayout:
 		orientation: 'vertical'
 		size: root.size
 
 		canvas.before:
-			Color:
-	            rgba: (1, 1, 1, 1)
+			# Color:
+	        #     rgba: (1, 1, 1, 1)
 	        Rectangle:
 	            pos: self.pos
 	            size: self.size
 
-	    BoxLayout:
+	    MDBoxLayout:
 	    	orientation: 'horizontal'
 	    	size_hint_y: .2
 	    	padding: 5
-
+			# restart button
 	    	Button:
 	    		size_hint: (None, None)
-	    		size: (self.parent.height * .85, self.parent.height * .85)
+	    		size: (self.parent.height * .65, self.parent.height * .65)
 		        background_normal: ''
         		background_color: (0,0,0,0)
 		        canvas.before:
@@ -57,11 +58,11 @@
 		        on_press: root.restart()
 		        Image:
 		            source: 'res/images/restart.png'
-		            center_x: self.parent.center_x - (self.parent.width / 4)
+		            center_x: self.parent.center_x
 		            center_y: self.parent.center_y
 		            width: self.parent.width / 1.8
 
-		    Label:
+		    MDLabel:
 		    	id: resultlabel
 		    	text: ''
 		    	color: (0, 0, 0, 1)
@@ -70,19 +71,19 @@
 		    	halign: 'center'
 		    	valign: 'middle'
 
-	    BoxLayout:
+	    MDBoxLayout:
 		    GridLayout:
 		    	id: stringboxes
 		    	spacing: 10
 		    	padding: 30, 10
 
-	    BoxLayout:
+	    MDBoxLayout:
 	    	orientation: 'vertical'
 	    	size_hint: (1, None)
 	    	height: root.height * 0.3
 	    	padding: 5
 
-	    	BoxLayout:
+	    	MDBoxLayout:
 	    		orientation: 'horizontal'
 	    		spacing: 2
 
@@ -136,7 +137,7 @@
 	    			text: 'P'
 	    			on_press: root.string_pressed(self.text)
 
-	    	BoxLayout:
+	    	MDBoxLayout:
 	    		orientation: 'horizontal'
 	    		padding: 10, 2
 	    		spacing: 2
@@ -186,7 +187,7 @@
 	    			text: 'L'
 	    			on_press: root.string_pressed(self.text)
 
-	    	BoxLayout:
+	    	MDBoxLayout:
 	    		orientation: 'horizontal'
 	    		spacing: 2
 

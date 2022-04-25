@@ -5,76 +5,43 @@
     Manager:
         id: screen_manager
 
-    ActionBar:
-        size_hint_y: 0.1
-        background_image: ''
-	    background_color: (1, 1, 1, 1)
-		canvas.before:
-	        Color:
-	            rgba: (0, 0, 0, 1)
-	        Line:
-	            width: 1
-	            rectangle: (self.x, self.y, self.width, self.height)
-            
-        ActionView:
-            ActionPrevious:
-            	with_previous: False
-			    size_hint: None, None
-    			size: 0, 0
 
-            ActionButton:
-                text: 'ホーム'
-                color: app.navigation_active_color if root.manager.current=='home' else (0, 0, 0, 1)
-                on_release: root.manager.current = 'home'
-                size_hint_x: 1 / len(root.manager.screens)
-                font_size: self.width / 8
-                text_size: self.size
-                halign: 'center'
-                valign: 'bottom'
-                padding_y: 5
-                background_normal: ''
-                background_down: ''
-                Image:
-                	source: 'res/images/home_active.png' if root.manager.current=='home' else 'res/images/home.png'
-                	center_x: self.parent.center_x
-                	center_y: self.parent.center_y + (root.width / 50)
-                	width: root.width / 11
+    MDBottomNavigation:
+        # size hint Important to keep bar down
+        size_hint_y: 0.09
+	    # background_color: (1, 1, 1, 1)
+		# canvas.before:
+	    #     Color:
+	    #         rgba: (0, 0, 0, 1)
+	        # Line:
+	        #     width: 1
+	        #     rectangle: (self.x, self.y, self.width, self.height)
+        id:bottom_nav
 
-            ActionButton:
-                text: '遊びかた'
-                color: app.navigation_active_color if root.manager.current=='howto' else (0, 0, 0, 1)
-                on_release: root.manager.current = 'howto'
-                size_hint_x: 1 / len(root.manager.screens)
-                font_size: self.width / 8
-                text_size: self.size
-                halign: 'center'
-                valign: 'bottom'
-                padding_y: 5
-                background_normal: ''
-                background_down: ''
-                Image:
-                	source: 'res/images/howto_active.png' if root.manager.current=='howto' else 'res/images/howto.png'
-                	center_x: self.parent.center_x
-                	center_y: self.parent.center_y + (root.width / 50)
-                	width: root.width / 11
+        MDBottomNavigationItem:
+            id: home_nav
+            name: 'home'
+            text: 'Home'
+            icon: 'home'
+            badge_icon: "numeric-10"
+            on_tab_release: root.manager.current = 'home'
 
-            ActionButton:
-                text: 'ゲーム'
-                color: app.navigation_active_color if root.manager.current=='game' else (0, 0, 0, 1)
-                on_release: root.manager.current = 'game'
-                size_hint_x: 1 / len(root.manager.screens)
-                font_size: self.width / 8
-                text_size: self.size
-                halign: 'center'
-                valign: 'bottom'
-                padding_y: 5
-                background_normal: ''
-                background_down: ''
-                Image:
-                	source: 'res/images/game_active.png' if root.manager.current=='game' else 'res/images/game.png'
-                	center_x: self.parent.center_x
-                	center_y: self.parent.center_y + (root.width / 50)
-                	width: root.width / 11
+
+        MDBottomNavigationItem:
+            id: howto_nav
+            name: 'howto'
+            text: 'Help'
+            icon: 'help-rhombus'
+            badge_icon: "help-rhombus"
+            on_tab_release: root.manager.current = 'howto'
+
+
+        MDBottomNavigationItem:
+            id: game_nav
+            name: 'game'
+            text: 'Play'
+            icon: 'grid'
+            on_tab_release: root.manager.current = 'game'            
 
 <Manager>:
 

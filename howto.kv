@@ -1,41 +1,42 @@
 <HowtoScreen>:
-	BoxLayout:
+	MDBoxLayout:
 		orientation: 'vertical'
 		size: root.size
 		padding: 30
 
 		canvas.before:
-			Color:
-	            rgba: (1, 1, 1, 1)
+			# Color:
+	        #     rgba: (1, 1, 1, 1)
 	        Rectangle:
 	            pos: self.pos
 	            size: self.size
 
-	    FloatLayout:
-		    Label:
-		    	text: '遊びかた'
-		    	color: (0, 0, 0, 1)
+	    MDFloatLayout:
+		    MDLabel:
+		    	text: 'How to Play'
+		    	# color: (0, 0, 0, 1)
+				halign: "center"
 		    	font_size: root.width / 8
 		    	pos_hint: {'center_x': .5, 'y': .1}
 
-		FloatLayout:
-			Label:
+		MDFloatLayout:
+			MDLabel:
 				text:
-					'6回のチャンスの中でヒントをもとに5文字の英単語を推測するゲームです'
-				color: (0, 0, 0, 1)
+					'Guess 5 letter word using colour hints'
+				# color: (0, 0, 0, 1)
 		        font_size: root.width / 16
 		        text_size: self.size
 		        padding_x: 10
 		        halign: 'center'
 		        pos_hint: {'center_x': .5, 'y': .9}
 
-		FloatLayout:
-			GridLayout:
+		MDFloatLayout:
+			MDGridLayout:
 				cols: 3
 				spacing: 5
 				pos_hint: {'center_x': .5, 'y': .6}
 
-				Label:
+				MDLabel:
 					text: ''
 					size_hint_x: None
 					width: root.width * 0.2
@@ -46,27 +47,27 @@
 				            pos: self.pos
 				            size: self.size
 
-				Label:
-					text: '→'
+				MDLabel:
+					text: '-'
 					valign: 'middle'
 					halign: 'center'
 					font_size: self.width / 1.5 
 					size_hint_x: None
 					width: root.width * 0.1
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					text_size: self.size
 
-				Label:
-					text: '文字と位置が両方正しい'
+				MDLabel:
+					text: 'Both letters and positions are correct'
 					font_size: root.width / 20
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					size_hint_x: None
 					width: root.width * 0.5
 					text_size: self.size
 					halign: 'left'
 					valign: 'middle'
 
-				Label:
+				MDLabel:
 					text: ''
 					size_hint_x: None
 					width: root.width * 0.2
@@ -77,27 +78,27 @@
 				            pos: self.pos
 				            size: self.size
 
-				Label:
-					text: '→'
+				MDLabel:
+					text: '-'
 					valign: 'middle'
 					halign: 'center'
 					font_size: self.width / 1.5 
 					size_hint_x: None
 					width: root.width * 0.1
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					text_size: self.size
 
-				Label:
-					text: '文字は使われているが位置が正しくない'
+				MDLabel:
+					text: 'Characters in wrong position'
 					font_size: root.width / 20
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					text_size: self.size
 					halign: 'left'
 					valign: 'middle'
 					size_hint_x: None
 					width: root.width * 0.5
 
-				Label:
+				MDLabel:
 					text: ''
 					size_hint_x: None
 					width: root.width * 0.2
@@ -108,20 +109,20 @@
 				            pos: self.pos
 				            size: self.size
 
-				Label:
-					text: '→'
+				MDLabel:
+					text: '-'
 					valign: 'middle'
 					halign: 'center'
 					font_size: self.width / 1.5 
 					size_hint_x: None
 					width: root.width * 0.1
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					text_size: self.size
 
-				Label:
-					text: '文字と位置が両方正しくない'
+				MDLabel:
+					text: 'Wrong letters and position'
 					font_size: root.width / 20
-					color: (0, 0, 0, 1)
+					# color: (0, 0, 0, 1)
 					text_size: self.size
 					halign: 'left'
 					valign: 'middle'

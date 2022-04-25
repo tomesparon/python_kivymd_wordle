@@ -1,81 +1,91 @@
+# Don't use MDLabel here
 <TitleLabel@Label>:
 	font_size: self.width / 2
 	size_hint: (self.parent.width / 6, None)
 	size: (self.parent.width / 7, self.parent.width / 7)
 	canvas.before:
 		Color:
-            rgba: (0, .5, 0, 1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
+			rgba: (0, .5, 0, 1)
+		Rectangle:
+			pos: self.pos
+			size: self.size
 
 <HomeScreen>:
-	BoxLayout:
+	MDBoxLayout:
 		orientation: 'vertical'
 		size: root.size
 
+
 		canvas.before:
-			Color:
-	            rgba: (1, 1, 1, 1)
-	        Rectangle:
-	            pos: self.pos
-	            size: self.size
+			# Color:
+			# 	rgba: (1, 1, 1, 1)
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		MDToolbar:
+			title: "Wordle"
+			elevation: dp(10)
+			md_bg_color: 0, 0.5, 0, 1
+			# left_action_items: [["menu", lambda x: root.callback1()]]
+			right_action_items: [["theme-light-dark", lambda x: root.switch_theme()]]
 
-	    BoxLayout:
-	    	orientation: 'horizontal'
-	    	size_hint_x: .96
-	    	pos_hint: {'center_x': .5}
-	    	spacing: 5
+		MDBoxLayout:
+			orientation: 'horizontal'
+			size_hint_x: .96
+			pos_hint: {'center_x': .5}
+			spacing: 5
 
-	    	TitleLabel:
-	    		text: 'W'
+			TitleLabel:
+				text: 'W'
 
-	    	TitleLabel:
-	    		text: 'O'
+			TitleLabel:
+				text: 'O'
 
-	    	TitleLabel:
-	    		text: 'R'
+			TitleLabel:
+				text: 'R'
 
-	    	TitleLabel:
-	    		text: 'D'
+			TitleLabel:
+				text: 'D'
 
-	    	TitleLabel:
-	    		text: 'L'
+			TitleLabel:
+				text: 'L'
 
-	    	TitleLabel:
-	    		text: 'E'
+			TitleLabel:
+				text: 'E'
 
-	    FloatLayout:
-		    Button:
-		        text: 'スタート'
-		        font_size: self.width / 7
-		        size_hint: (.6, .35)
-	        	pos_hint: {'center_x':0.5, 'y': 0.2}
-		        background_normal: ''
-		        background_color: 0,0,0,0
-		        canvas.before:
-		            Color:
-		                rgba: (0, .8, .3, 1) if self.state=='normal' else (0, .8, .3, .5)
-		            RoundedRectangle:
-		                pos: self.pos
-		                size: self.size
-		                radius: [20,]
-		        on_press:
-		            root.manager.current = 'game'
-		FloatLayout:
+		MDFloatLayout:
 			Button:
-		        text: '遊びかた'
-		        font_size: self.width / 7
-		        size_hint: (.6, .35)
-	        	pos_hint: {'center_x':0.5, 'y': 0.7}
-		        background_normal: ''
-		        background_color: 0,0,0,0
-		        canvas.before:
-		            Color:
-		                rgba: (0, .7, 0, 1) if self.state=='normal' else (0, .7, 0, .5)
-		            RoundedRectangle:
-		                pos: self.pos
-		                size: self.size
-		                radius: [20,]
-		        on_press:
-		            root.manager.current = 'howto'
+				text: 'Start'
+				font_size: self.width / 6
+				size_hint: (.6, .35)
+				pos_hint: {'center_x':0.5, 'y': 0.2}
+				background_normal: ''
+				background_color: 0,0,0,0
+				canvas.before:
+					Color:
+						rgba: (0, .8, .3, 1) if self.state=='normal' else (0, .8, .3, .5)
+					RoundedRectangle:
+						pos: self.pos
+						size: self.size
+						radius: [20,]
+				on_press:
+					root.manager.current = 'game'
+					app.root.ids.bottom_nav.switch_tab('game')
+		MDFloatLayout:
+			Button:
+				text: 'How to play'
+				font_size: self.width / 6
+				size_hint: (.6, .35)
+				pos_hint: {'center_x':0.5, 'y': 0.7}
+				background_normal: ''
+				background_color: 0,0,0,0
+				canvas.before:
+					Color:
+						rgba: (0, .7, 0, 1) if self.state=='normal' else (0, .7, 0, .5)
+					RoundedRectangle:
+						pos: self.pos
+						size: self.size
+						radius: [20,]
+				on_press:
+					root.manager.current = 'howto'
+					app.root.ids.bottom_nav.switch_tab('howto')
