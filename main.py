@@ -14,15 +14,17 @@ from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
 
+from kivy.utils import platform
 
 Builder.load_file('main.kv')
 Builder.load_file('home.kv')
 Builder.load_file('howto.kv')
 Builder.load_file('gamekv.kv')
 
-#Set window size, UNSET for android
-# from kivy.core.window import Window
-# Window.size = (500, 900)
+if platform == 'win':
+	from kivy.core.window import Window
+	Window.size = (500, 900)
+
 
 class HomeScreen(MDScreen):
 	def switch_theme(self):
@@ -74,14 +76,14 @@ class GameScreen(MDScreen):
 			for i in range(self.CHANCE * self.LENGTH):
 				self.ids.stringboxes.add_widget(StringBox(
 					text = str(self.pressed_strings[i][0]),
-					color = (1, 1, 1, 1) if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
+					color = self.app.theme_cls.text_color if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
 					background_color = self.pressed_strings[i][1]
 				))
 		else:
 			for i in range(self.CHANCE * self.LENGTH):
 				self.ids.stringboxes.add_widget(StringBox(
 					text = str(self.pressed_strings[i][0]),
-					color = (0, 0, 0, 1) if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
+					color = self.app.theme_cls.text_color if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
 					background_color = self.pressed_strings[i][1]
 				))
 
@@ -185,6 +187,7 @@ class GameScreen(MDScreen):
 		self.ids.resultlabel.text = ''
 		self.update()
 
+	# TODO: Fix threading
 	def flash_message(self, text):
 		self.ids.resultlabel.text = text
 		time.sleep(2)

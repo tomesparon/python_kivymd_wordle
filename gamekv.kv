@@ -31,48 +31,28 @@
 		orientation: 'vertical'
 		size: root.size
 
-		canvas.before:
-			# Color:
-	        #     rgba: (1, 1, 1, 1)
-	        Rectangle:
-	            pos: self.pos
-	            size: self.size
-
 	    MDBoxLayout:
 	    	orientation: 'horizontal'
 	    	size_hint_y: .2
-	    	padding: 5
+			spacing: 10
+	    	padding: 30, 10
 			# restart button
-	    	Button:
-	    		size_hint: (None, None)
+	    	MDFloatingActionButton:
+				icon: 'res/images/restart.png'
+	    		#size_hint: (None, None)
 	    		size: (self.parent.height * .65, self.parent.height * .65)
-		        background_normal: ''
-        		background_color: (0,0,0,0)
-		        canvas.before:
-		            Color:
-		                rgba: (0, .4, 0, 1)
-		            RoundedRectangle:
-		                pos: self.pos
-		                size: self.size
-		                radius: [20,]
 		        on_press: root.restart()
-		        Image:
-		            source: 'res/images/restart.png'
-		            center_x: self.parent.center_x
-		            center_y: self.parent.center_y
-		            width: self.parent.width / 1.8
 
 		    MDLabel:
 		    	id: resultlabel
 		    	text: ''
-		    	color: (0, 0, 0, 1)
 		    	text_size: self.size
 		    	font_size: self.width / (len(self.text) + 5)
 		    	halign: 'center'
 		    	valign: 'middle'
 
 	    MDBoxLayout:
-		    GridLayout:
+		    MDGridLayout:
 		    	id: stringboxes
 		    	spacing: 10
 		    	padding: 30, 10
@@ -237,3 +217,4 @@
 	    			text: 'BACK'
 	    			size_hint_x: 1.2
 	    			on_press: root.back_pressed()
+

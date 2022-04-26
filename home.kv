@@ -5,7 +5,7 @@
 	size: (self.parent.width / 7, self.parent.width / 7)
 	canvas.before:
 		Color:
-			rgba: (0, .5, 0, 1)
+			rgba: app.theme_cls.primary_color
 		Rectangle:
 			pos: self.pos
 			size: self.size
@@ -15,19 +15,15 @@
 		orientation: 'vertical'
 		size: root.size
 
-
-		canvas.before:
-			# Color:
-			# 	rgba: (1, 1, 1, 1)
-			Rectangle:
-				pos: self.pos
-				size: self.size
-		MDToolbar:
+		MDTopAppBar:
 			title: "Wordle"
-			elevation: dp(10)
-			md_bg_color: 0, 0.5, 0, 1
+			elevation: 5
+			md_bg_color: app.theme_cls.primary_color
 			# left_action_items: [["menu", lambda x: root.callback1()]]
-			right_action_items: [["theme-light-dark", lambda x: root.switch_theme()]]
+			right_action_items:
+				[
+				["theme-light-dark", lambda x: root.switch_theme(), "Change Theme"]
+				]
 
 		MDBoxLayout:
 			orientation: 'horizontal'
@@ -54,38 +50,26 @@
 				text: 'E'
 
 		MDFloatLayout:
-			Button:
+			MDRaisedButton:
 				text: 'Start'
 				font_size: self.width / 6
 				size_hint: (.6, .35)
 				pos_hint: {'center_x':0.5, 'y': 0.2}
-				background_normal: ''
-				background_color: 0,0,0,0
-				canvas.before:
-					Color:
-						rgba: (0, .8, .3, 1) if self.state=='normal' else (0, .8, .3, .5)
-					RoundedRectangle:
-						pos: self.pos
-						size: self.size
-						radius: [20,]
-				on_press:
+				md_bg_color: app.theme_cls.primary_color
+				text_color: app.theme_cls.opposite_text_color
+				on_release:
 					root.manager.current = 'game'
 					app.root.ids.bottom_nav.switch_tab('game')
+
 		MDFloatLayout:
-			Button:
+			MDRaisedButton:
 				text: 'How to play'
 				font_size: self.width / 6
 				size_hint: (.6, .35)
 				pos_hint: {'center_x':0.5, 'y': 0.7}
-				background_normal: ''
-				background_color: 0,0,0,0
-				canvas.before:
-					Color:
-						rgba: (0, .7, 0, 1) if self.state=='normal' else (0, .7, 0, .5)
-					RoundedRectangle:
-						pos: self.pos
-						size: self.size
-						radius: [20,]
-				on_press:
+				md_bg_color: app.theme_cls.primary_color
+				text_color: app.theme_cls.opposite_text_color
+				on_release:
 					root.manager.current = 'howto'
 					app.root.ids.bottom_nav.switch_tab('howto')
+

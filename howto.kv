@@ -4,17 +4,9 @@
 		size: root.size
 		padding: 30
 
-		canvas.before:
-			# Color:
-	        #     rgba: (1, 1, 1, 1)
-	        Rectangle:
-	            pos: self.pos
-	            size: self.size
-
 	    MDFloatLayout:
 		    MDLabel:
 		    	text: 'How to Play'
-		    	# color: (0, 0, 0, 1)
 				halign: "center"
 		    	font_size: root.width / 8
 		    	pos_hint: {'center_x': .5, 'y': .1}
@@ -23,7 +15,6 @@
 			MDLabel:
 				text:
 					'Guess 5 letter word using colour hints'
-				# color: (0, 0, 0, 1)
 		        font_size: root.width / 16
 		        text_size: self.size
 		        padding_x: 10
@@ -51,16 +42,14 @@
 					text: '-'
 					valign: 'middle'
 					halign: 'center'
-					font_size: self.width / 1.5 
+					font_size: self.width / 1.5
 					size_hint_x: None
 					width: root.width * 0.1
-					# color: (0, 0, 0, 1)
 					text_size: self.size
 
 				MDLabel:
 					text: 'Both letters and positions are correct'
 					font_size: root.width / 20
-					# color: (0, 0, 0, 1)
 					size_hint_x: None
 					width: root.width * 0.5
 					text_size: self.size
@@ -82,16 +71,14 @@
 					text: '-'
 					valign: 'middle'
 					halign: 'center'
-					font_size: self.width / 1.5 
+					font_size: self.width / 1.5
 					size_hint_x: None
 					width: root.width * 0.1
-					# color: (0, 0, 0, 1)
 					text_size: self.size
 
 				MDLabel:
 					text: 'Characters in wrong position'
 					font_size: root.width / 20
-					# color: (0, 0, 0, 1)
 					text_size: self.size
 					halign: 'left'
 					valign: 'middle'
@@ -113,16 +100,14 @@
 					text: '-'
 					valign: 'middle'
 					halign: 'center'
-					font_size: self.width / 1.5 
+					font_size: self.width / 1.5
 					size_hint_x: None
 					width: root.width * 0.1
-					# color: (0, 0, 0, 1)
 					text_size: self.size
 
 				MDLabel:
 					text: 'Wrong letters and position'
 					font_size: root.width / 20
-					# color: (0, 0, 0, 1)
 					text_size: self.size
 					halign: 'left'
 					valign: 'middle'
