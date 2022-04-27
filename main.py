@@ -27,14 +27,8 @@ if platform == 'win':
 
 
 class HomeScreen(MDScreen):
-	def switch_theme(self):
-		self.app = MDApp.get_running_app()
-		if self.app.theme_cls.theme_style == "Dark":
-			self.app.theme_cls.theme_style = "Light"
-		else:
-			self.app.theme_cls.theme_style = "Dark"
+	pass
 
- 
 class HowtoScreen(MDScreen):
 	pass
 
@@ -187,7 +181,7 @@ class GameScreen(MDScreen):
 		self.ids.resultlabel.text = ''
 		self.update()
 
-	# TODO: Fix threading
+	# TODO: Fix threading so that text can be resized
 	def flash_message(self, text):
 		self.ids.resultlabel.text = text
 		time.sleep(2)
@@ -204,7 +198,21 @@ class Manager(ScreenManager):
 	def __init__(self, **kwargs):
 		super(Manager, self).__init__(**kwargs)
 		self.transition = NoTransition()
+  
+	def testing(self):
+		print('Hello there manager')
 
+	def switch_themetoggle(self):
+		self.app = MDApp.get_running_app()
+		if self.app.theme_cls.theme_style == "Dark":
+			self.app.theme_cls.theme_style = "Light"
+		else:
+			self.app.theme_cls.theme_style = "Dark"
+		# Experiment with manager class
+		#self.manager.testing()
+		# Access Game Class via id to update the theme colors on stringboxes/ guessletters
+		self.ids.gameclass.update_stringboxes()
+  
 class GameApp(MDApp):
 	navigation_active_color = ListProperty([0, 1, 0, 1])
 	correct_color = ListProperty([0, .5, 0, 1])

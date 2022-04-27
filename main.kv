@@ -1,7 +1,15 @@
 <NavigationBar>:
 	manager: screen_manager
     orientation: 'vertical'
-
+    MDTopAppBar:
+        title: ""
+        elevation: 5
+        md_bg_color: app.theme_cls.primary_color
+        # left_action_items: [["menu", lambda x: root.callback1()]]
+        right_action_items:
+            [
+            ["theme-light-dark", lambda x: root.manager.switch_themetoggle(), "Change Theme"]
+            ]
     Manager:
         id: screen_manager
 
@@ -9,13 +17,6 @@
     MDBottomNavigation:
         # size hint Important to keep bar down
         size_hint_y: 0.09
-	    # background_color: (1, 1, 1, 1)
-		# canvas.before:
-	    #     Color:
-	    #         rgba: (0, 0, 0, 1)
-	        # Line:
-	        #     width: 1
-	        #     rectangle: (self.x, self.y, self.width, self.height)
         id:bottom_nav
 
         MDBottomNavigationItem:
@@ -43,11 +44,14 @@
 <Manager>:
 
     HomeScreen:
+        id: homeclass
         name: 'home'
 
     HowtoScreen:
+        id: howtoclass
         name: 'howto'
 
     GameScreen:
+        id: gameclass
         name: 'game'
 
