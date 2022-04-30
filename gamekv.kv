@@ -2,7 +2,8 @@
 	font_size: self.width / 1.5
 	background_normal: ''
 	background_down: ''
-	canvas.before:
+	angle: 0
+	canvas.before:	
 		Color:
 			rgba:
 				(.5, .5, .5, .5) if self.background_color==app.blank_color and self.text!='' \
@@ -11,6 +12,13 @@
 		Line:
 			width: 2
 			rectangle: (self.x, self.y, self.width, self.height)
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: self.center
+    canvas.after:
+        PopMatrix			
 
 <StringButton@Button>:
 	background_normal: ''
