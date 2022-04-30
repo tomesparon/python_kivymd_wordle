@@ -3,13 +3,20 @@
 	font_size: self.width / 2
 	size_hint: (self.parent.width / 6, None)
 	size: (self.parent.width / 7, self.parent.width / 7)
+	angle: 0
 	canvas.before:
 		Color:
 			rgba: app.theme_cls.primary_color
 		Rectangle:
 			pos: self.pos
 			size: self.size
-
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: self.center
+    canvas.after:
+        PopMatrix			
 <HomeScreen>:
 	MDBoxLayout:
 		orientation: 'vertical'
@@ -22,7 +29,7 @@
 			size_hint_x: .96
 			pos_hint: {'center_x': .5}
 			spacing: 5
-
+			id: thetitle
 			TitleLabel:
 				text: 'W'
 

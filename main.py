@@ -16,6 +16,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.utils import platform
 
 from kivy.animation import Animation
+from kivymd.toast import toast
 
 Builder.load_file('main.kv')
 Builder.load_file('home.kv')
@@ -25,7 +26,6 @@ Builder.load_file('gamekv.kv')
 if platform == 'win':
 	from kivy.core.window import Window
 	Window.size = (500, 900)
-
 
 class HomeScreen(MDScreen):
 	pass
@@ -216,6 +216,7 @@ class Manager(ScreenManager):
 		self.app = MDApp.get_running_app()
 		if self.app.high_contrast:
 			print("Change to not Highcontrast")
+			self.show_toast("Changing to Default Contrast")
 			for i in range(self.ids.gameclass.CHANCE * self.ids.gameclass.LENGTH):
 				if self.ids.gameclass.pressed_strings[i][1] == self.app.correct_color:
 					self.ids.gameclass.pressed_strings[i][1] = [0, .5, 0, 1]
@@ -231,6 +232,7 @@ class Manager(ScreenManager):
 			self.app.high_contrast = False
 		else:
 			print("Change to Highcontrast")
+			self.show_toast("Changing to High Contrast")   
 			for i in range(self.ids.gameclass.CHANCE * self.ids.gameclass.LENGTH):
 				if self.ids.gameclass.pressed_strings[i][1] == self.app.correct_color:
 					self.ids.gameclass.pressed_strings[i][1] = [0, 0, 1, 1]
@@ -250,6 +252,7 @@ class Manager(ScreenManager):
 
 	def switch_themetoggle(self):
 		self.app = MDApp.get_running_app()
+		self.show_toast("Switching theme")
 		if self.app.theme_cls.theme_style == "Dark":
 			self.app.theme_cls.theme_style = "Light"
 		else:
@@ -258,7 +261,11 @@ class Manager(ScreenManager):
 		#self.manager.testing()
 		# Access Game Class via id to update the theme colors on stringboxes/ guessletters
 		self.ids.gameclass.update_stringboxes()
-  
+
+	def show_toast(self, msg):
+		'''Displays a toast on the screen.'''
+		toast(msg,duration=1.5)  
+
 class GameApp(MDApp):
 	navigation_active_color = ListProperty([0, 1, 0, 1])
 	correct_color = ListProperty([0, .5, 0, 1])
@@ -277,6 +284,7 @@ class GameApp(MDApp):
 		# self.theme_cls.theme_style = "Dark"
 		self.theme_cls.primary_palette = "Green"
 		self.theme_cls.accent_palette = "Green"
+		# main.kv load
 		return NavigationBar()
 
 if __name__ == '__main__':
