@@ -8,7 +8,8 @@
         # left_action_items: [["menu", lambda x: root.callback1()]]
         right_action_items:
             [
-            ["theme-light-dark", lambda x: root.manager.switch_themetoggle(), "Change Theme"]
+            ["theme-light-dark", lambda x: root.manager.switch_themetoggle(), "Change Theme"],
+            ["contrast-circle", lambda x: root.manager.switch_highcontrast(), "High Contrast"]
             ]
     Manager:
         id: screen_manager

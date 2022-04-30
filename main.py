@@ -13,8 +13,9 @@ from kivy.properties import ListProperty
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
-
 from kivy.utils import platform
+
+from kivy.animation import Animation
 
 Builder.load_file('main.kv')
 Builder.load_file('home.kv')
@@ -45,6 +46,7 @@ class GameScreen(MDScreen):
 		self.xindex = self.yindex = 0
 		self.gameover = False
 		self.app = MDApp.get_running_app()
+		self.doanim = False
 
 		# A list that stores the background color of characters, etc.
 		self.pressed_strings = [['', self.app.blank_color] for i in range(self.CHANCE * self.LENGTH)]
@@ -59,29 +61,38 @@ class GameScreen(MDScreen):
 		self.game = game.Game(self.CHANCE, self.LENGTH)
 		print(self.game.get_word())
 		# self.remaining = list(self.game.get_word())
-
+  
+	def animate(self, widget, *args):
+		animate = Animation(opacity=0, duration=0)
+		animate += Animation(
+			angle = 360,
+			opacity=1,
+			duration=.3)
+		animate.start(widget)
+		
   
 	def update_stringboxes(self, dt = None):
-		# stringboxes REDRAW quick hack to make it work with themes
 		self.ids.stringboxes.clear_widgets()
 		self.ids.stringboxes.cols = self.LENGTH
 		self.app = MDApp.get_running_app()
-		if self.app.theme_cls.theme_style == "Dark":
-			for i in range(self.CHANCE * self.LENGTH):
-				self.ids.stringboxes.add_widget(StringBox(
-					text = str(self.pressed_strings[i][0]),
-					color = self.app.theme_cls.text_color if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
-					background_color = self.pressed_strings[i][1]
-				))
-		else:
-			for i in range(self.CHANCE * self.LENGTH):
-				self.ids.stringboxes.add_widget(StringBox(
-					text = str(self.pressed_strings[i][0]),
-					color = self.app.theme_cls.text_color if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
-					background_color = self.pressed_strings[i][1]
-				))
+		rowpos = ((self.yindex )* 5)
+		for i in range(self.CHANCE * self.LENGTH):
+			box = StringBox(
+				text = str(self.pressed_strings[i][0]),
+				color = self.app.theme_cls.text_color if self.pressed_strings[i][1]==self.app.blank_color else (1, 1, 1, 1),
+				background_color = self.pressed_strings[i][1]
+			)
+			self.ids.stringboxes.add_widget(box)
+			# target row, but only doanim on one row using the bool when enter pressed
+			if self.pressed_strings[i][1]!=self.app.blank_color:
+				if i in range(rowpos-5,rowpos):
+					if self.doanim == True:
+						self.animate(box)
+		self.doanim = False
 
 	def update_keyboard(self):
+		# with self.ids.board.canvas:
+		# 	RoundedRectangle(radius=(20,))
 		for key, value in self.keyboard_colors.items():
 			self.ids[key].background_color = value
 
@@ -157,6 +168,7 @@ class GameScreen(MDScreen):
 
 				self.xindex = 0
 				self.yindex += 1
+				self.doanim = True
 
 				if self.yindex == self.CHANCE:
 					self.ids.resultlabel.text = self.game.get_word()
@@ -199,8 +211,42 @@ class Manager(ScreenManager):
 		super(Manager, self).__init__(**kwargs)
 		self.transition = NoTransition()
   
-	def testing(self):
-		print('Hello there manager')
+	def switch_highcontrast(self):
+		# perform spaghetti code
+		self.app = MDApp.get_running_app()
+		if self.app.high_contrast:
+			print("Change to not Highcontrast")
+			for i in range(self.ids.gameclass.CHANCE * self.ids.gameclass.LENGTH):
+				if self.ids.gameclass.pressed_strings[i][1] == self.app.correct_color:
+					self.ids.gameclass.pressed_strings[i][1] = [0, .5, 0, 1]
+				if self.ids.gameclass.pressed_strings[i][1] == self.app.close_color:
+					self.ids.gameclass.pressed_strings[i][1] = [.8, .8, 0, 1]   
+			for alpha in list(string.ascii_uppercase):
+				if self.ids.gameclass.keyboard_colors[alpha] == self.app.correct_color:
+					self.ids.gameclass.keyboard_colors[alpha] = [0, .5, 0, 1]     
+				if self.ids.gameclass.keyboard_colors[alpha] == self.app.close_color:
+					self.ids.gameclass.keyboard_colors[alpha] = [.8, .8, 0, 1]     
+			self.app.correct_color = [0, .5, 0, 1]
+			self.app.close_color   = [.8, .8, 0, 1]
+			self.app.high_contrast = False
+		else:
+			print("Change to Highcontrast")
+			for i in range(self.ids.gameclass.CHANCE * self.ids.gameclass.LENGTH):
+				if self.ids.gameclass.pressed_strings[i][1] == self.app.correct_color:
+					self.ids.gameclass.pressed_strings[i][1] = [0, 0, 1, 1]
+				if self.ids.gameclass.pressed_strings[i][1] == self.app.close_color:
+					self.ids.gameclass.pressed_strings[i][1] = [1, 0, 0, 1]
+			for alpha in list(string.ascii_uppercase):
+				if self.ids.gameclass.keyboard_colors[alpha] == self.app.correct_color:
+					self.ids.gameclass.keyboard_colors[alpha] = [0, 0, 1, 1]
+				if self.ids.gameclass.keyboard_colors[alpha] == self.app.close_color:
+					self.ids.gameclass.keyboard_colors[alpha] = [1, 0, 0, 1]
+
+			self.app.correct_color = [0, 0, 1, 1]
+			self.app.close_color   = [1, 0, 0, 1]
+			self.app.high_contrast = True
+		# Finally update the screen
+		self.ids.gameclass.update()
 
 	def switch_themetoggle(self):
 		self.app = MDApp.get_running_app()
@@ -218,9 +264,9 @@ class GameApp(MDApp):
 	correct_color = ListProperty([0, .5, 0, 1])
 	close_color = ListProperty([.8, .8, 0, 1])
 	miss_color = ListProperty([.5, .5, .5, 1])
-	keyboard_default_color = ListProperty([.9, .9, .9, .75])
+	keyboard_default_color = ListProperty([.8, .8, .8, .8])
 	blank_color = ListProperty([0, 0, 0, 0])
-
+	high_contrast = False
 	def __init__(self, **kwargs):
 		super(GameApp, self).__init__(**kwargs)
 		self.title = 'Wordle'
